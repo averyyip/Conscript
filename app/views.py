@@ -1,5 +1,6 @@
-from flask import render_template
+from flask import render_template, flash, redirect
 from app import app
+from .forms import LoginForm
 
 """
 Tips for making templates and linking with handlers
@@ -45,4 +46,13 @@ posts = [  # fake array of posts
 @app.route("/index")
 def index():
 	return render_template("index.html")
+
+#Without methods argument, defaulted to take only "GET" requests
+@app.route("/login", methods=["GET", "POST"])
+def login():
+	form = LoginForm()
+	return render_template("login.html",
+	                       title="Sign In",
+	                       form=form)
+
 
