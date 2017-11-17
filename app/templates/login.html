@@ -8,8 +8,13 @@
       <!-- for flask WTF CSRF security -->
       {{ form.hidden_tag() }}
       <p>
-          Please enter your OpenID:<br>
-          {{ form.openid(size=80) }}<br>
+          <!-- Creates the field -->
+          Please enter your OAuth:<br>
+          {{ form.oauth(size=80) }}<br>
+          <!-- Print all the errors according to validator -->
+          {% for error in form.oauth.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br>
       </p>
       <p>{{ form.remember_me }} Remember Me</p>
       <p><input type="submit" value="Sign In"></p>

@@ -45,12 +45,20 @@ posts = [  # fake array of posts
 @app.route("/")
 @app.route("/index")
 def index():
-	return render_template("index.html")
+	return render_template("index.html", messages=["hi","bye"])
 
 #Without methods argument, defaulted to take only "GET" requests
 @app.route("/login", methods=["GET", "POST"])
 def login():
 	form = LoginForm()
+	#If called when loading page, it'll render page
+	"""Called as part of submission, it gathers all data(ex. open id, 
+	runs all validators in forms.py (datarequired), """
+	if form.validate_on_submit():
+		#displays success on submission
+		flash('Login requested for OAuth="%s", remember_me=%s' %
+              (form.oauth.data, str(form.remember_me.data)))
+		return redirect("/index")
 	return render_template("login.html",
 	                       title="Sign In",
 	                       form=form)
